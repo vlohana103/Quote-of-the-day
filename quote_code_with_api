@@ -1,0 +1,62 @@
+import requests
+
+
+favorites = [] 
+
+
+def get_quote():
+   response = requests.get("https://zenquotes.io/api/random/")
+  
+   if response.status_code == 200:
+       data = response.json()
+       quote_dict = data[0]
+       quote = quote_dict["q"]
+       author = quote_dict["a"]
+      
+       print(f'\n"{quote}" - {author}\n')
+      
+       while True:
+           save_choice = input("Press 'Y' to save, 'N' to skip: ").lower()
+           if save_choice == "y":
+               save_quote(quote, author)
+               break
+           elif save_choice == "n":
+               print("Quote not saved.\n")
+               break
+           else:
+               print("Invalid option!\n")
+   else:
+       print("Failed to fetch quote.\n")
+
+
+def save_quote(quote, author):
+   favorites.append({"quote": quote, "author": author})  
+   print("✓ Quote saved!\n")
+
+
+def view_favorites():
+   if len(favorites) == 0:
+       print("No saved quotes yet!\n")
+   else:
+       print("\n--- Your Saved Quotes ---")
+       for i, item in enumerate(favorites, 1):
+           print(f'{i}. "{item["quote"]}" - {item["author"]}')
+       print()
+
+
+def main():
+   while True:
+       ask = input("(G)et quote, (V)iew favorites, (E)xit: ").lower()
+      
+       if ask == 'e':
+           print("Goodbye!\n")
+           break
+       elif ask == 'g':
+           get_quote()
+       elif ask == 'v':
+           view_favorites()
+       else:
+           print("Invalid input!\n")
+
+
+main()
