@@ -9,7 +9,8 @@ A CLI applicaiton that fetches random inspirational quotes from the ZenQuotes AP
 - View saved quotes with authors
 
 ## How to run:
-install in bash: pip install requests
+1. install in bash: pip install requests
+2. Run the file from your terminal: python quote_of_the_day.py
 
 # Code Structure
 - 'requests' library to call API
